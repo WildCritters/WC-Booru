@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC.Context;
 
 namespace WC.Context.Migrations
 {
     [DbContext(typeof(WildCrittersDBContext))]
-    partial class WildCrittersDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201009034444_Create_Role_Function_Entity")]
+    partial class Create_Role_Function_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

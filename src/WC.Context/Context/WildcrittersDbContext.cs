@@ -11,5 +11,9 @@ namespace WC.Context
             : base(options) {}
 
         public DbSet<User> Emotes { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Function> Functions { get; set; }
+        public DbSet<RoleFunction> RoleFunctions { get; set; } 
+        public DbSet<UserRole> UserRoles { get; set; } 
     }
 }
