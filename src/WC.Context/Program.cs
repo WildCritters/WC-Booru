@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WC.Context.Configurations;
 
 namespace WC.Context
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

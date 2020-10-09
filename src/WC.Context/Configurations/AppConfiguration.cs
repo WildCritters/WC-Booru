@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Collections.Concurrent;
 
-namespace WC.Context
+namespace WC.Context.Configurations
 {
     public class AppConfiguration
     {
