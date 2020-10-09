@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace WC.Context
+namespace WC.Context.Configurations
 {
     public class WildCrittersDBContextFactory : IDesignTimeDbContextFactory<WildCrittersDBContext>
     {

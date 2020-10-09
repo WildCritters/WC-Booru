@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace WC.Context
+namespace WC.Context.Configurations
 {
     public static class ContentDirectoryFinder
     {
