@@ -16,6 +16,8 @@ namespace WC.Context.Configurations
 
         private WildCrittersRepository<Function> _functionRepository;
         private WildCrittersRepository<Role> _roleRepository;
+        private WildCrittersRepository<User> _userRepository; 
+
         public WildCrittersRepository<Function> functionRepository
         {
             get
@@ -37,6 +39,18 @@ namespace WC.Context.Configurations
                     this._roleRepository = new WildCrittersRepository<Role>(context);
                 }
                 return this._roleRepository;
+            }
+        }
+
+        public WildCrittersRepository<User> userRepository
+        {
+            get
+            {
+                if(this._userRepository == null)
+                {
+                    this._userRepository = new WildCrittersRepository<User>(context);
+                }
+                return this._userRepository;
             }
         }
 
