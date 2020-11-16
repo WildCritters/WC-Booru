@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WC.Controller", "src\WC.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WC.Model", "src\WC.Model\WC.Model.csproj", "{C02F770E-BC38-4B03-B660-EE970A3BC08E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.RestAPI", "WC.RestAPI\WC.RestAPI.csproj", "{26FC5C73-2309-4A5E-B773-497B045A4F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.RestAPI", "src\WC.RestAPI\WC.RestAPI.csproj", "{26FC5C73-2309-4A5E-B773-497B045A4F95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
