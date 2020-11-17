@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WC.RestAPI.DTO
+namespace WC.RestAPI.Model.DTO
 {
     public class User
     {
         public int Id { get; set; }
         public String UserName { get; set; }
-        public String Pass { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public String Mail { get; set; }
         public DateTimeOffset DateOfCreation { get; set; }
         public DateTimeOffset LastUpdate { get; set; }

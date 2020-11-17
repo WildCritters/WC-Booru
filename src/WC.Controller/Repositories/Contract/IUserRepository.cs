@@ -7,7 +7,8 @@ namespace WC.Controller.Repositories.Contract
 {
     public interface IUserRepository
     {
-        public User GetUserById(int userId);
-        public IEnumerable<User> GetUsers();
+        User GetUserById(int userId);
+        IEnumerable<User> GetUsers();
+        User Login(string username, string password);
     }
 }

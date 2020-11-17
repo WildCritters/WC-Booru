@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WC.RestAPI.DTO
+namespace WC.RestAPI.Model.DTO
 {
-    public class Role
+    public class Function
     {
         public int Id { get; set; }
         public String Name { get; set; }

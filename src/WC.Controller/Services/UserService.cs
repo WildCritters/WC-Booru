@@ -3,6 +3,7 @@ using System.Linq;
 using WC.Context.Configurations;
 using WC.Controller.Repositories;
 using WC.Controller.Repositories.Contract;
+using WC.Controller.Services.Contract;
 using WC.Model.Security;
 
 namespace WC.Controller.Services
@@ -24,6 +25,11 @@ namespace WC.Controller.Services
         public IEnumerable<User> GetUsers()
         {
             return this.userRepository.GetUsers();
+        }
+
+        public User Login(string username, string password)
+        {
+            return this.userRepository.Login(username, password);
         }
     }
 }

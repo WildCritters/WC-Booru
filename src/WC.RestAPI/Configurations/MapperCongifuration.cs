@@ -11,8 +11,8 @@ namespace WC.RestAPI.Configurations
     {
         public MapperCongifuration()
         {
-            CreateMap<User, DTO.User>().ReverseMap();
-            CreateMap<Role, DTO.Role>().ReverseMap();
+            CreateMap<User, Model.DTO.User>().ReverseMap();
+            CreateMap<Role, Model.DTO.Role>().ReverseMap();
         }
     }
 }

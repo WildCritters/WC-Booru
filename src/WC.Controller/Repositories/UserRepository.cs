@@ -25,5 +25,31 @@ namespace WC.Controller.Repositories
         {
             return this.Context.Users.AsEnumerable();
         }
+
+        public User Login(string username, string password)
+        {
+            var user = this.Context.Users.FirstOrDefault(x => x.UserName.Equals(username));
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] passHash, byte[] passSalt){
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+
+                return Enumerable.SequenceEqual(computedHash, passHash);
+            }
+        }
     }
 }
