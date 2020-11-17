@@ -1,11 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 using WC.Controller.Services.Contract;
 using WC.RestAPI.Model.Login.Request;
 
@@ -35,7 +38,7 @@ namespace WC.RestAPI.Controllers
         [HttpPost]
         public IActionResult Login(AuthUserRequest request)
         {
-            var userFounded = this._service.Login(request.UserName, request.Password);
+            var userFounded = this._service.Login(request.Username, request.Password);
 
             if (userFounded == null)
             {
@@ -48,7 +51,22 @@ namespace WC.RestAPI.Controllers
                 new Claim(ClaimTypes.Name, userFounded.UserName)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token")));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(claims),
+                SigningCredentials = credentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return Ok(new
+            {
+                token = tokenHandler.WriteToken(token)
+            });
         }
     }
 }
