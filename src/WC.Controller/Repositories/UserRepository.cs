@@ -21,6 +21,13 @@ namespace WC.Controller.Repositories
                 .FirstOrDefault();
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return this.Context.Users
+                .Where(x => x.UserName.ToLower().Equals(username.ToLower()))
+                .FirstOrDefault();
+        }
+
         public IEnumerable<User> GetUsers()
         {
             return this.Context.Users.AsEnumerable();

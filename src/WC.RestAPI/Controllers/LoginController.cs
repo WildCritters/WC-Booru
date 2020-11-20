@@ -29,11 +29,14 @@ namespace WC.RestAPI.Controllers
             this._config = config;
         }
 
-        // [HttpPost]
-        // public ActionResult Register()
-        // {
-
-        // }
+        [HttpPost]
+        public IActionResult RegisterUser(RegisterUserRequest request)
+        {
+            if (!_service.ExistUsername(request.UserName))
+            {
+                return BadRequest("The Username exist!");
+            }
+        }
 
         [HttpPost]
         public IActionResult Login(AuthUserRequest request)

@@ -17,6 +17,11 @@ namespace WC.Controller.Services
             this.userRepository = repository;
         }
 
+        public bool ExistUsername(string username)
+        {
+            return this.userRepository.GetUserByUsername(username) != null;
+        }
+
         public User GetUser(int userId)
         {
             return this.userRepository.GetUserById(userId);
