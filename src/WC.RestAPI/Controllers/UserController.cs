@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WC.RestAPI.Model.DTO;
-using WC.Controller.Services.Contract;
+using WC.Model.DTO;
+using WC.Model.Services.Contract;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,14 +27,14 @@ namespace WC.RestAPI.Controllers
         [HttpGet("/GetById")]
         public ActionResult GetById(int id)
         {
-            var user = _mapper.Map<User>(_service.GetUser(id));
+            var user = _service.GetUser(id);
             return Ok(user);
         }
 
         [HttpGet("/GetUsers")]
         public ActionResult GetUsers()
         {
-            var users = _mapper.Map<IEnumerable<User>>(_service.GetUsers());
+            var users = _service.GetUsers();
             return Ok(users);
         }
 

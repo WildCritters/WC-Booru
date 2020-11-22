@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WC.Model.Security;
+using System.Threading.Tasks;
+using WC.Model.Entity;
 
 namespace WC.Controller.Repositories.Contract
 {
@@ -11,5 +12,6 @@ namespace WC.Controller.Repositories.Contract
         public User GetUserByUsername(string username);
         IEnumerable<User> GetUsers();
         User Login(string username, string password);
+        User RegisterUser(User user, string password);
     }
 }

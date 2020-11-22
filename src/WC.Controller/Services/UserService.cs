@@ -3,38 +3,53 @@ using System.Linq;
 using WC.Context.Configurations;
 using WC.Controller.Repositories;
 using WC.Controller.Repositories.Contract;
-using WC.Controller.Services.Contract;
-using WC.Model.Security;
+using WC.Model.Services.Contract;
+using WC.Model.Entity;
+using WC.Model.DTO;
+using AutoMapper;
 
-namespace WC.Controller.Services
+namespace WC.Model.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository)
+        public UserService(IUserRepository repository, 
+            IRoleRepository roleRepository, 
+            IMapper mapper)
         {
-            this.userRepository = repository;
+            this._userRepository = repository;
+            this._roleRepository = roleRepository;
+            this._mapper = mapper;
         }
 
         public bool ExistUsername(string username)
         {
-            return this.userRepository.GetUserByUsername(username) != null;
+            return this._userRepository.GetUserByUsername(username) != null;
         }
 
-        public User GetUser(int userId)
+        public UserDto GetUser(int userId)
         {
-            return this.userRepository.GetUserById(userId);
+            return _mapper.Map<UserDto>(this._userRepository.GetUserById(userId));
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<UserDto> GetUsers()
         {
-            return this.userRepository.GetUsers();
+            return _mapper.Map<IEnumerable<UserDto>>(this._userRepository.GetUsers());
         }
 
-        public User Login(string username, string password)
+        public UserDto Login(string username, string password)
         {
-            return this.userRepository.Login(username, password);
+            return _mapper.Map<UserDto>(this._userRepository.Login(username, password));
+        }
+
+        public UserDto RegisterUser(UserDto userDto, string password)
+        {
+            userDto.RoleId = this._roleRepository.GetRoleByName("User").Id;
+            var user = this._userRepository.RegisterUser(_mapper.Map<User>(userDto), password);
+            return _mapper.Map<UserDto>(user);
         }
     }
 }

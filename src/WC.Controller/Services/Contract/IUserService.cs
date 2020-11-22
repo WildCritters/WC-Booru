@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using WC.Model.Security;
+using WC.Model.DTO;
+using WC.Model.Entity;
 
-namespace WC.Controller.Services.Contract
+namespace WC.Model.Services.Contract
 {
     public interface IUserService
     {
         public bool ExistUsername(string username);
-        User GetUser(int userId);
-        IEnumerable<User> GetUsers();
-        User Login(string username, string password);
+        UserDto GetUser(int userId);
+        IEnumerable<UserDto> GetUsers();
+        UserDto Login(string username, string password);
+        UserDto RegisterUser(UserDto userDto, string password);
     }
 }

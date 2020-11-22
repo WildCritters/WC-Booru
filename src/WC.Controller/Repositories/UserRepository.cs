@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using WC.Context;
 using WC.Controller.Repositories.Contract;
-using WC.Model.Security;
+using WC.Model.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using WC.Model.DTO;
+using System.Threading.Tasks;
 
 namespace WC.Controller.Repositories
 {
@@ -35,7 +37,7 @@ namespace WC.Controller.Repositories
 
         public User Login(string username, string password)
         {
-            var user = this.Context.Users.FirstOrDefault(x => x.UserName.Equals(username));
+            var user = this.Context.Users.Include(x => x.Role).FirstOrDefault(x => x.UserName.Equals(username));
 
             if (user == null)
             {
@@ -56,6 +58,30 @@ namespace WC.Controller.Repositories
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
 
                 return Enumerable.SequenceEqual(computedHash, passHash);
+            }
+        }
+
+        public User RegisterUser(User user, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            this.Context.Users.Add(user);
+            this.Context.SaveChanges();
+
+            return user;
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passHash, out byte[] passSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passSalt = hmac.Key;
+                passHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
     }

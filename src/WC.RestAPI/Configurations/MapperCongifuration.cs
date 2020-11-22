@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WC.Model.Security;
+using WC.Model.Entity;
+using WC.Model.DTO;
+using WC.RestAPI.Model.Login.Request;
 
 namespace WC.RestAPI.Configurations
 {
@@ -11,8 +13,9 @@ namespace WC.RestAPI.Configurations
     {
         public MapperCongifuration()
         {
-            CreateMap<User, Model.DTO.User>().ReverseMap();
-            CreateMap<Role, Model.DTO.Role>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<RegisterUserRequest, UserDto>().ReverseMap();
+            CreateMap<Role, RoleDto>().ReverseMap();
         }
     }
 }

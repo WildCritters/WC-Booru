@@ -9,8 +9,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using WC.Controller.Services.Contract;
+using WC.Model.DTO;
+using WC.Model.Services.Contract;
 using WC.RestAPI.Model.Login.Request;
+using WC.RestAPI.Model.Login.Response;
 
 namespace WC.RestAPI.Controllers
 {
@@ -29,17 +31,27 @@ namespace WC.RestAPI.Controllers
             this._config = config;
         }
 
-        [HttpPost]
-        public IActionResult RegisterUser(RegisterUserRequest request)
+        [HttpPost("/RegisterUser")]
+        public ActionResult RegisterUser(RegisterUserRequest request)
         {
-            if (!_service.ExistUsername(request.UserName))
+            if (_service.ExistUsername(request.UserName))
             {
                 return BadRequest("The Username exist!");
             }
+
+            var userDto = this._service.RegisterUser(_mapper.Map<UserDto>(request), request.Password);
+
+            var token = GenerateToken(userDto);
+
+            return Ok(new AuthUserResponse()
+            {
+                User = userDto,
+                Token = token
+            });
         }
 
-        [HttpPost]
-        public IActionResult Login(AuthUserRequest request)
+        [HttpPost("/LoginUser")]
+        public ActionResult Login(AuthUserRequest request)
         {
             var userFounded = this._service.Login(request.Username, request.Password);
 
@@ -48,13 +60,24 @@ namespace WC.RestAPI.Controllers
                 return Unauthorized();
             }
 
+            String token = GenerateToken(userFounded);
+
+            return Ok(new AuthUserResponse()
+            {
+                User = userFounded,
+                Token = token
+            });
+        }
+
+        private String GenerateToken(UserDto user)
+        {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, userFounded.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFounded.UserName)
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Token").Value));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -66,10 +89,7 @@ namespace WC.RestAPI.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new
-            {
-                token = tokenHandler.WriteToken(token)
-            });
+            return tokenHandler.WriteToken(token);
         }
     }
 }

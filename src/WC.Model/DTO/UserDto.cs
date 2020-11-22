@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WC.RestAPI.Model.DTO
+namespace WC.Model.DTO
 {
-    public class User
+    public class UserDto
     {
         public int Id { get; set; }
         public String UserName { get; set; }
@@ -14,9 +14,7 @@ namespace WC.RestAPI.Model.DTO
         public String Mail { get; set; }
         public DateTimeOffset DateOfCreation { get; set; }
         public DateTimeOffset LastUpdate { get; set; }
-        public String ActivationCode { get; set; }
-        public Boolean Active { get; set; }
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public RoleDto Role { get; set; }
     }
 }

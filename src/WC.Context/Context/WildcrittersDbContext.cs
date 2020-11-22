@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using WC.Model.Security;
+using WC.Model.Entity;
 
 namespace WC.Context
 {

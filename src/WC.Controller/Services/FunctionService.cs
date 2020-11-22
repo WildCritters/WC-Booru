@@ -1,7 +1,7 @@
 using WC.Context.Configurations;
-using WC.Model.Security;
+using WC.Model.Entity;
 
-namespace WC.Controller.Services
+namespace WC.Model.Services
 {
     public class FunctionService : IFunctionService {
         private readonly UnitOfWork unitOfWork;

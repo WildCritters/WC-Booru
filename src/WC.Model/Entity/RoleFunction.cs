@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WC.Model.Security
+namespace WC.Model.Entity
 {
     [Table("RoleFunction")]
     public class RoleFunction {

@@ -11,8 +11,8 @@ using System.Text;
 using WC.Context;
 using WC.Controller.Repositories;
 using WC.Controller.Repositories.Contract;
-using WC.Controller.Services;
-using WC.Controller.Services.Contract;
+using WC.Model.Services;
+using WC.Model.Services.Contract;
 using WC.RestAPI.Configurations;
 
 namespace WC.RestAPI
@@ -66,6 +66,7 @@ namespace WC.RestAPI
         public void ConfigureRepository(IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
         }
 
         public void ConfigureService(IServiceCollection services)

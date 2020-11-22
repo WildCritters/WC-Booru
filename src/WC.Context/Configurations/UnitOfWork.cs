@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using WC.Model.Security;
+using WC.Model.Entity;
 
 namespace WC.Context.Configurations
 {

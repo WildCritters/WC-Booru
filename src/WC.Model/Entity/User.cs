@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WC.Model.Security
+namespace WC.Model.Entity
 {
     [Table("User")]
     public class User
@@ -14,8 +14,6 @@ namespace WC.Model.Security
         public String Mail { get; set; }
         public DateTimeOffset DateOfCreation { get; set; }
         public DateTimeOffset LastUpdate { get; set; }    
-        public String ActivationCode { get; set; }
-        public Boolean Active { get; set; }
         public int RoleId { get; set; }
 
         [ForeignKey("RoleId")]
