@@ -13,7 +13,9 @@ namespace WC.Model.Entity
         public byte[] PasswordSalt { get; set; }
         public String Mail { get; set; }
         public DateTimeOffset DateOfCreation { get; set; }
-        public DateTimeOffset LastUpdate { get; set; }    
+        public DateTimeOffset LastUpdate { get; set; }
+        public String ActivationCode { get; set; }
+        public bool Active { get; set; }    
         public int RoleId { get; set; }
 
         [ForeignKey("RoleId")]

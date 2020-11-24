@@ -14,6 +14,8 @@ namespace WC.Model.DTO
         public String Mail { get; set; }
         public DateTimeOffset DateOfCreation { get; set; }
         public DateTimeOffset LastUpdate { get; set; }
+        public Guid ActivationCode { get; set; }
+        public bool Active { get; set; } 
         public int RoleId { get; set; }
         public RoleDto Role { get; set; }
     }
