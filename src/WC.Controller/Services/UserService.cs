@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WC.Context.Configurations;
@@ -47,6 +48,9 @@ namespace WC.Model.Services
 
         public UserDto RegisterUser(UserDto userDto, string password)
         {
+            userDto.Active = false;
+            userDto.ActivationCode = Guid.NewGuid();
+            userDto.DateOfCreation = DateTimeOffset.Now;
             userDto.RoleId = this._roleRepository.GetRoleByName("User").Id;
             var user = this._userRepository.RegisterUser(_mapper.Map<User>(userDto), password);
             return _mapper.Map<UserDto>(user);

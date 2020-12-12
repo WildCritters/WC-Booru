@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +92,36 @@ namespace WC.RestAPI.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        private async void SentActivationMail(UserDto user){
+            string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/Login/ActivateAccount/{user.ActivationCode}";
+            var from = new MailAddress("mauro9410@gmail.com", "Activate your Account!");
+            var to = new MailAddress(user.Mail);
+            var frontEmailPassword = "your password";
+            String subject = _config.GetSection("EmailTemplate::Subject").Value;
+            String body = _config.GetSection("EmailTemplate::Body").Value;
+            body = body + $"<a href='{baseURL}'>{baseURL}</a>";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(from.Address, frontEmailPassword)
+            };
+
+            using (var message = new MailMessage(from, to)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+            {
+                smtp.Send(message);
+            }
         }
     }
 }
