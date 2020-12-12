@@ -13,8 +13,12 @@ namespace WC.Model.Entity
         public byte[] PasswordSalt { get; set; }
         public String Mail { get; set; }
         public DateTimeOffset DateOfCreation { get; set; }
+        public DateTimeOffset LastLoggedAt { get; set; }
+        public DateTimeOffset LastForumReadAt { get; set; }
         public DateTimeOffset LastUpdate { get; set; }
         public String ActivationCode { get; set; }
+        public String TimeZone { get; set; }
+        public String Ip { get; set; }
         public bool Active { get; set; }    
         public int RoleId { get; set; }
 

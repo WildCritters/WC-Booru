@@ -33,8 +33,8 @@ namespace WC.RestAPI.Controllers
             this._config = config;
         }
 
-        [HttpPost("/RegisterUser")]
-        public ActionResult RegisterUser(RegisterUserRequest request)
+        [HttpPost("/SignUpUser")]
+        public ActionResult SignUpUser(RegisterUserRequest request)
         {
             if (_service.ExistUsername(request.UserName))
             {
@@ -94,34 +94,34 @@ namespace WC.RestAPI.Controllers
             return tokenHandler.WriteToken(token);
         }
 
-        private async void SentActivationMail(UserDto user){
-            string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/Login/ActivateAccount/{user.ActivationCode}";
-            var from = new MailAddress("mauro9410@gmail.com", "Activate your Account!");
-            var to = new MailAddress(user.Mail);
-            var frontEmailPassword = "your password";
-            String subject = _config.GetSection("EmailTemplate::Subject").Value;
-            String body = _config.GetSection("EmailTemplate::Body").Value;
-            body = body + $"<a href='{baseURL}'>{baseURL}</a>";
+        //private async void SentActivationMail(UserDto user){
+        //    string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/Login/ActivateAccount/{user.ActivationCode}";
+        //    var from = new MailAddress("mauro9410@gmail.com", "Activate your Account!");
+        //    var to = new MailAddress(user.Mail);
+        //    var frontEmailPassword = "your password";
+        //    String subject = _config.GetSection("EmailTemplate::Subject").Value;
+        //    String body = _config.GetSection("EmailTemplate::Body").Value;
+        //    body = body + $"<a href='{baseURL}'>{baseURL}</a>";
 
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(from.Address, frontEmailPassword)
-            };
+        //    var smtp = new SmtpClient
+        //    {
+        //        Host = "smtp.gmail.com",
+        //        Port = 587,
+        //        EnableSsl = true,
+        //        DeliveryMethod = SmtpDeliveryMethod.Network,
+        //        UseDefaultCredentials = false,
+        //        Credentials = new NetworkCredential(from.Address, frontEmailPassword)
+        //    };
 
-            using (var message = new MailMessage(from, to)
-            {
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            })
-            {
-                smtp.Send(message);
-            }
-        }
+        //    using (var message = new MailMessage(from, to)
+        //    {
+        //        Subject = subject,
+        //        Body = body,
+        //        IsBodyHtml = true
+        //    })
+        //    {
+        //        smtp.Send(message);
+        //    }
+        //}
     }
 }
