@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WC.Model.Entity
@@ -7,6 +8,7 @@ namespace WC.Model.Entity
     [Table("User")]
     public class User
     {
+        [Key]
         public long Id { get; set; } 
         public String UserName { get; set; }
         public byte[] PasswordHash { get; set; }
