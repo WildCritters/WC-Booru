@@ -8,10 +8,12 @@ namespace WC.Controller.Repositories.Contract
 {
     public interface IUserRepository
     {
-        User GetUserById(int userId);
+        User GetUserById(long userId);
         public User GetUserByUsername(string username);
         IEnumerable<User> GetUsers();
         User Login(string username, string password);
         User RegisterUser(User user, string password);
+        void UpdateUser(User user);
+        void UpdatePassword(User user, string password);
     }
 }

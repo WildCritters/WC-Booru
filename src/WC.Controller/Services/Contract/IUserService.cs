@@ -7,9 +7,11 @@ namespace WC.Model.Services.Contract
     public interface IUserService
     {
         public bool ExistUsername(string username);
-        UserDto GetUser(int userId);
+        UserDto GetUser(long userId);
         IEnumerable<UserDto> GetUsers();
         UserDto Login(string username, string password);
         UserDto RegisterUser(UserDto userDto, string password);
+        void UpdateUser(UserDto user);
+        void UpdatePassword(UserDto userDto, string password);
     }
 }

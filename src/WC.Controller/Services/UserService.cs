@@ -31,7 +31,7 @@ namespace WC.Model.Services
             return this._userRepository.GetUserByUsername(username) != null;
         }
 
-        public UserDto GetUser(int userId)
+        public UserDto GetUser(long userId)
         {
             return _mapper.Map<UserDto>(this._userRepository.GetUserById(userId));
         }
@@ -49,11 +49,28 @@ namespace WC.Model.Services
         public UserDto RegisterUser(UserDto userDto, string password)
         {
             userDto.Active = false;
-            userDto.ActivationCode = Guid.NewGuid();
+            //userDto.ActivationCode = Guid.NewGuid();
             userDto.DateOfCreation = DateTimeOffset.Now;
             userDto.RoleId = this._roleRepository.GetRoleByName("User").Id;
             var user = this._userRepository.RegisterUser(_mapper.Map<User>(userDto), password);
             return _mapper.Map<UserDto>(user);
+        }
+
+        public void UpdateUser(UserDto userDto)
+        {
+            User user = this._userRepository.GetUserById(userDto.Id);
+            user.UserName = userDto.UserName;
+            user.Mail = userDto.Mail;
+            user.LastLoggedAt = userDto.LastLoggedAt;
+            user.LastForumReadAt = userDto.LastForumReadAt;
+            user.LastUpdate = DateTimeOffset.Now;
+            user.TimeZone = userDto.TimeZone;
+            this._userRepository.UpdateUser(user);
+        }
+
+        public void UpdatePassword(UserDto userDto, string password)
+        {
+            this._userRepository.UpdatePassword(_mapper.Map<User>(userDto), password);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace WC.Controller.Repositories
 
         public UserRepository(WildCrittersDBContext context) => this.Context = context;
 
-        public User GetUserById(int userId)
+        public User GetUserById(long userId)
         {
             return this.Context.Users
                 .Include(x => x.Role)
@@ -74,6 +74,24 @@ namespace WC.Controller.Repositories
             this.Context.SaveChanges();
 
             return user;
+        }
+
+        public void UpdateUser(User user)
+        {
+            this.Context.Users.Update(user);
+            this.Context.SaveChanges();
+        }
+
+        public void UpdatePassword(User user, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            this.Context.Users.Update(user);
+            this.Context.SaveChanges();
         }
 
         private void CreatePasswordHash(string password, out byte[] passHash, out byte[] passSalt)

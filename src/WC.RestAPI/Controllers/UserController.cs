@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WC.Model.DTO;
 using WC.Model.Services.Contract;
+using WC.RestAPI.Model.User.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -36,6 +37,19 @@ namespace WC.RestAPI.Controllers
         {
             var users = _service.GetUsers();
             return Ok(users);
+        }
+
+        [HttpPost("/UpdatePassword")]
+        public ActionResult UpdatePassword(UpdatePasswordRequest request)
+        {
+            var userFounded = this._service.GetUser(request.UserId);
+            if(userFounded == null)
+            {
+                return NotFound();   
+            }
+            this._service.UpdatePassword(userFounded, request.NewPassword);
+            
+            return Ok();
         }
 
         // POST api/<UserController>

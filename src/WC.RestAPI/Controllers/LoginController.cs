@@ -33,8 +33,8 @@ namespace WC.RestAPI.Controllers
             this._config = config;
         }
 
-        [HttpPost("/SignUpUser")]
-        public ActionResult SignUpUser(RegisterUserRequest request)
+        [HttpPost("/SignUp")]
+        public ActionResult SignUp(RegisterUserRequest request)
         {
             if (_service.ExistUsername(request.UserName))
             {
@@ -52,7 +52,7 @@ namespace WC.RestAPI.Controllers
             });
         }
 
-        [HttpPost("/LoginUser")]
+        [HttpPost("/Login")]
         public ActionResult Login(AuthUserRequest request)
         {
             var userFounded = this._service.Login(request.Username, request.Password);
@@ -69,6 +69,21 @@ namespace WC.RestAPI.Controllers
                 User = userFounded,
                 Token = token
             });
+        }
+
+        [HttpPost("/Logout")]
+        public ActionResult Logout(long userId)
+        {
+            var userFounded = this._service.GetUser(userId);
+            if(userFounded == null)
+            {
+                return NotFound();
+            }
+
+            userFounded.LastLoggedAt = DateTimeOffset.Now;
+
+            this._service.UpdateUser(userFounded);
+            return Ok();
         }
 
         private String GenerateToken(UserDto user)
