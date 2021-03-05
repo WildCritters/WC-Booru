@@ -14,6 +14,7 @@ using WC.Controller.Repositories.Contract;
 using WC.Model.Services;
 using WC.Model.Services.Contract;
 using WC.RestAPI.Configurations;
+using WC.Context.Configurations;
 
 namespace WC.RestAPI
 {
@@ -46,8 +47,6 @@ namespace WC.RestAPI
                 });
 
             services.AddAutoMapper(typeof(MapperCongifuration));
-
-            services.AddScoped<UnitOfWork>();
 
             services.AddDbContext<WildCrittersDBContext>(opt => opt.UseMySql(Configuration["ConnectionStrings:Default"]));
             

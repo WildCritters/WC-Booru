@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using WC.Model.DTO;
 using System.Threading.Tasks;
-
+using WC.Model.Entity;
+using WC.Context.Configurations;
 namespace WC.Controller.Repositories
 {
     public class UserRepository : IUserRepository
@@ -22,27 +23,31 @@ namespace WC.Controller.Repositories
 
         public User GetUserById(long userId)
         {
-            return this.Context.Users
-                .Include(x => x.Role)
-                .Where(x => x.Id == userId)
-                .FirstOrDefault();
+            return this.userRepository.GetEnumerable(x => x.Id == userId, null, "Role").FirstOrDefault();
+            // return this.Context.Users
+            //     .Include(x => x.Role)
+            //     .Where(x => x.Id == userId)
+            //     .FirstOrDefault();
         }
 
         public User GetUserByUsername(string username)
         {
-            return this.Context.Users
-                .Where(x => x.UserName.ToLower().Equals(username.ToLower()))
-                .FirstOrDefault();
+            return this.userRepository.GetEnumerable(x => x.UserName.ToLower().Equals(username.ToLower())).FirstOrDefault();
+            // return this.Context.Users
+            //     .Where(x => x.UserName.ToLower().Equals(username.ToLower()))
+            //     .FirstOrDefault();
         }
 
         public IEnumerable<User> GetUsers()
         {
-            return this.Context.Users.AsEnumerable();
+            return this.userRepository.GetEnumerable();
+            //return this.Context.Users.AsEnumerable();
         }
 
         public User Login(string username, string password)
         {
-            var user = this.Context.Users.Include(x => x.Role).FirstOrDefault(x => x.UserName.Equals(username));
+            var user = this.userRepository.GetEnumerable(null,null,"Role").FirstOrDefault(x => x.UserName.Equals(username));
+            //var user = this.Context.Users.Include(x => x.Role).FirstOrDefault(x => x.UserName.Equals(username));
 
             if (user == null)
             {
@@ -75,16 +80,17 @@ namespace WC.Controller.Repositories
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            this.Context.Users.Add(user);
-            this.Context.SaveChanges();
+            this.userRepository.Update(user);
+            //this.Context.Users.Add(user);
+            this.unitOfWork.Save();
 
             return user;
         }
 
         public void UpdateUser(User user)
         {
-            this.Context.Users.Update(user);
-            this.Context.SaveChanges();
+            this.userRepository.Update(user);
+            this.unitOfWork.Save();
         }
 
         public void UpdatePassword(User user, string password)
@@ -95,8 +101,8 @@ namespace WC.Controller.Repositories
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            this.Context.Users.Update(user);
-            this.Context.SaveChanges();
+            this.userRepository.Update(user);
+            this.unitOfWork.Save();
         }
 
         private void CreatePasswordHash(string password, out byte[] passHash, out byte[] passSalt)
