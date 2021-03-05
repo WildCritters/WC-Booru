@@ -11,9 +11,14 @@ namespace WC.Controller.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        internal WildCrittersDBContext Context { get; set; }
+        private readonly UnitOfWork unitOfWork;
 
-        public UserRepository(WildCrittersDBContext context) => this.Context = context;
+        private readonly WildCrittersRepository<User> userRepository;
+
+        public UserRepository(WildCrittersDBContext context){
+            this.unitOfWork = unitOfWork;
+            this.userRepository = unitOfWork.userRepository;
+        }
 
         public User GetUserById(long userId)
         {

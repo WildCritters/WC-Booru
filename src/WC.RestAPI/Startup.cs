@@ -29,9 +29,7 @@ namespace WC.RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WildCrittersDBContext>(opt => opt.UseMySql(Configuration["ConnectionStrings:Default"]));
-
-            ConfigureRepository(services);
+            //ConfigureRepository(services);
 
             ConfigureService(services);
 
@@ -48,6 +46,12 @@ namespace WC.RestAPI
                 });
 
             services.AddAutoMapper(typeof(MapperCongifuration));
+
+            services.AddScoped<UnitOfWork>();
+
+            services.AddDbContext<WildCrittersDBContext>(opt => opt.UseMySql(Configuration["ConnectionStrings:Default"]));
+            
+            services.AddScoped<UnitOfWork>();
 
             services.AddTransient<Program>();
 
