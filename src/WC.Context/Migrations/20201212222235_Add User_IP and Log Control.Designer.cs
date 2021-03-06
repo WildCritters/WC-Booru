@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC.Context;
 
 namespace WC.Context.Migrations
 {
     [DbContext(typeof(WildCrittersDBContext))]
-    partial class WildCrittersDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201212222235_Add User_IP and Log Control")]
+    partial class AddUser_IPandLogControl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +70,9 @@ namespace WC.Context.Migrations
 
             modelBuilder.Entity("WC.Model.Entity.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
                     b.Property<string>("ActivationCode")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

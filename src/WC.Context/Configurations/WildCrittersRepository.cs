@@ -22,38 +22,47 @@ namespace WC.Context.Configurations
         public virtual IEnumerable<TEntity> GetEnumerable(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "") {
+            string includeProperties = "")
+        {
 
             IQueryable<TEntity> query = DbSet;
 
             if (filter != null) query = query.Where(filter);
 
-            foreach (var includeProperty in includeProperties
-            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) {
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' },
+            StringSplitOptions.RemoveEmptyEntries))
+            {
                 query = query.Include(includeProperty);
             }
 
-            if (orderBy != null) {
+            if (orderBy != null)
+            {
                 return orderBy(query).ToList();
-            } else {
+            }
+            else
+            {
                 return query.ToList();
             }
         }
 
-        public virtual TEntity GetById(object id) {
+        public virtual TEntity GetById(object id)
+        {
             return DbSet.Find(id);
         }
 
-        public virtual void Insert(TEntity entity) {
+        public virtual void Insert(TEntity entity)
+        {
             DbSet.Add(entity);
         }
 
-        public virtual void Delete(object id) {
+        public virtual void Delete(object id)
+        {
             TEntity entityToDelete = DbSet.Find(id);
             Delete(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete) {
+        public virtual void Delete(TEntity entityToDelete)
+        {
             if (Context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 DbSet.Attach(entityToDelete);
@@ -61,7 +70,8 @@ namespace WC.Context.Configurations
             DbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate) {
+        public virtual void Update(TEntity entityToUpdate)
+        {
             DbSet.Attach(entityToUpdate);
             Context.Entry(entityToUpdate).State = EntityState.Modified;
         }

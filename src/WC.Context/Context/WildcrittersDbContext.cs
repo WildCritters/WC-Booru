@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using WC.Model.Security;
+using WC.Model.Entity;
 
 namespace WC.Context
 {
@@ -14,6 +14,6 @@ namespace WC.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Function> Functions { get; set; }
         public DbSet<RoleFunction> RoleFunctions { get; set; } 
-        public DbSet<UserRole> UserRoles { get; set; } 
+        public DbSet<User> Users { get; set; }
     }
 }
