@@ -2,22 +2,24 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC.Context;
 
 namespace WC.Context.Migrations
 {
     [DbContext(typeof(WildCrittersDBContext))]
-    partial class WildCrittersDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201117041054_Refactor_User_password")]
+    partial class Refactor_User_password
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("WC.Model.Entity.Function", b =>
+            modelBuilder.Entity("WC.Model.Security.Function", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +33,7 @@ namespace WC.Context.Migrations
                     b.ToTable("Function");
                 });
 
-            modelBuilder.Entity("WC.Model.Entity.Role", b =>
+            modelBuilder.Entity("WC.Model.Security.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +47,7 @@ namespace WC.Context.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("WC.Model.Entity.RoleFunction", b =>
+            modelBuilder.Entity("WC.Model.Security.RoleFunction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,11 +68,11 @@ namespace WC.Context.Migrations
                     b.ToTable("RoleFunction");
                 });
 
-            modelBuilder.Entity("WC.Model.Entity.User", b =>
+            modelBuilder.Entity("WC.Model.Security.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
                     b.Property<string>("ActivationCode")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -79,15 +81,6 @@ namespace WC.Context.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTimeOffset>("DateOfCreation")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Ip")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTimeOffset>("LastForumReadAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTimeOffset>("LastLoggedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTimeOffset>("LastUpdate")
@@ -105,9 +98,6 @@ namespace WC.Context.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TimeZone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("UserName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -118,24 +108,24 @@ namespace WC.Context.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("WC.Model.Entity.RoleFunction", b =>
+            modelBuilder.Entity("WC.Model.Security.RoleFunction", b =>
                 {
-                    b.HasOne("WC.Model.Entity.Function", "Function")
+                    b.HasOne("WC.Model.Security.Function", "Function")
                         .WithMany()
                         .HasForeignKey("FunctionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WC.Model.Entity.Role", "Role")
+                    b.HasOne("WC.Model.Security.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WC.Model.Entity.User", b =>
+            modelBuilder.Entity("WC.Model.Security.User", b =>
                 {
-                    b.HasOne("WC.Model.Entity.Role", "Role")
+                    b.HasOne("WC.Model.Security.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

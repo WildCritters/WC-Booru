@@ -7,7 +7,7 @@ namespace WC.Context.Configurations
     {
         public static string CalculateContentRootFolder()
         {
-            return Path.Combine(AppContext.BaseDirectory, string.Format("..{0}..{0}..{0}..{0}WildCritters", Path.DirectorySeparatorChar));
+            return Path.Combine(AppContext.BaseDirectory, string.Format("..{0}..{0}..{0}..{0}WC.RestApi", Path.DirectorySeparatorChar));
         }
     }
 }

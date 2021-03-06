@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WC.Context;
 
 namespace WC.Context.Migrations
 {
     [DbContext(typeof(WildCrittersDBContext))]
-    partial class WildCrittersDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201122052140_Refactor_user_entity")]
+    partial class Refactor_user_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,26 +70,11 @@ namespace WC.Context.Migrations
 
             modelBuilder.Entity("WC.Model.Entity.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ActivationCode")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("DateOfCreation")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Ip")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTimeOffset>("LastForumReadAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTimeOffset>("LastLoggedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTimeOffset>("LastUpdate")
@@ -104,9 +91,6 @@ namespace WC.Context.Migrations
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TimeZone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("UserName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
