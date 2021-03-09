@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/WC.RestAPI/WC.RestAPI.csproj",
+                "${workspaceFolder}/WC.RestAPI/WC.RestAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/WC.RestAPI/WC.RestAPI.csproj",
+                "${workspaceFolder}/WC.RestAPI/WC.RestAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/WC.RestAPI/WC.RestAPI.csproj",
+                "${workspaceFolder}/WC.RestAPI/WC.RestAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

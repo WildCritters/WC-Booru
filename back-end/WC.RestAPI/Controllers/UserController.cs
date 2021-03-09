@@ -39,7 +39,7 @@ namespace WC.RestAPI.Controllers
             return Ok(users);
         }
 
-        [HttpPost("/UpdatePassword")]
+        [HttpPut("/UpdatePassword")]
         public ActionResult UpdatePassword(UpdatePasswordRequest request)
         {
             var userFounded = this._service.GetUser(request.UserId);
